@@ -1,13 +1,16 @@
 body {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column; /* Changes flow to top-to-bottom */
+  align-items: center; /* Centers the content horizontally */
   margin: 0;
   padding: 20px;
   box-sizing: border-box;
 }
 
 .column {
-  width: 45%;
+  width: 90%; /* Adjust width for better appearance */
+  max-width: 600px; /* Optional: Limit maximum width */
+  margin-bottom: 20px; /* Add spacing between columns */
   border: 1px solid #ccc;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
