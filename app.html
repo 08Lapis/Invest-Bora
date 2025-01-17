@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>App</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <!-- Left Column -->
+  <div class="column">
+    <p>Total Cost</p>
+    <input type="number" id="totalCostLeft"> <span>MMK</span>
+    <p>Total Profit</p>
+    <input type="number" id="totalProfitLeft"> <span>MMK</span>
+    <p id="PRLeft">Profit Rate : </p>
+    <br><br>
+    <p>X Invest</p>
+    <input type="number" id="xInvestLeft"> <span>MMK</span>
+    <br><br>
+    <button id="calLeft" onclick="click_for_X('Left')">Calculate</button>
+
+    <p id="XPLeft"> Total invested percentage of X : </p>
+    <p id="XSLeft"> Profit share of X : </p>
+    <p id="XRLeft"> X Profit Rate : </p>
+    <p id="XFLeft"> Formula of X : (Total Profit) x (Total invested percentage of X) x 30% </p>
+    <br>
+  </div>
+
+  <!-- Right Column -->
+  <div class="column">
+    <p>Total Cost</p>
+    <input type="number" id="totalCostRight"> <span>MMK</span>
+    <p>Total Profit</p>
+    <input type="number" id="totalProfitRight"> <span>MMK</span>
+    <p id="PRRight">Profit Rate : </p>
+    <br><br>
+    <p>Y Invest</p>
+    <input type="number" id="yInvestRight"> <span>MMK</span>
+    <br><br>
+    <button id="calRight" onclick="click_for_X('Right')">Calculate</button>
+
+    <p id="YPRight"> Total invested percentage of Y : </p>
+    <p id="YSRight"> Profit share of Y : </p>
+    <p id="YRRight"> Y Profit Rate : </p>
+    <p id="YFRight"> Formula of Y : (Total Profit) x (Total invested percentage of Y) x 30% </p>
+    <br>
+  </div>
+
+  <script>
+    const click_for_X = (side) => {
+      let totalCost = parseFloat(document.getElementById(`totalCost${side}`).value);
+      let totalProfit = parseFloat(document.getElementById(`totalProfit${side}`).value);
+      let PR = document.getElementById(`PR${side}`);
+      let xInvestElement = document.getElementById(`xInvest${side}`);
+      let yInvestElement = document.getElementById(`yInvest${side}`);
+      let XP = document.getElementById(`XP${side}`);
+      let XS = document.getElementById(`XS${side}`);
+      let XR = document.getElementById(`XR${side}`);
+      let XF = document.getElementById(`XF${side}`);
+      let YP = document.getElementById(`YP${side}`);
+      let YS = document.getElementById(`YS${side}`);
+      let YR = document.getElementById(`YR${side}`);
+      let YF = document.getElementById(`YF${side}`);
+
+      // Profit Rate Calculation
+      let CPR = (totalProfit / totalCost) * 100;
+      PR.innerText = `Profit Rate : ${CPR % 1 === 0 ? CPR : CPR.toFixed(2)}%`;
+
+      // Handle X Investments
+      if (xInvestElement) {
+        let xInvest = parseFloat(xInvestElement.value);
+        let CXP = (xInvest / totalCost) * 100;
+        XP.innerText = `Total invested percentage of X : ${CXP % 1 === 0 ? CXP : CXP.toFixed(2)}%`;
+        XF.innerText = `Formula of X : ${totalProfit} x ${(CXP / 100).toFixed(1)} x 0.3`;
+
+        let CXS = totalProfit * (CXP / 100) * 0.3;
+        XS.innerText = `Profit share of X : ${CXS % 1 === 0 ? CXS : CXS.toFixed(2)} MMK`;
+
+        let CXR = (CXS / xInvest) * 100;
+        XR.innerText = `X Profit Rate : ${CXR % 1 === 0 ? CXR : CXR.toFixed(2)}%`;
+      }
+
+      // Handle Y Investments
+      if (yInvestElement) {
+        let yInvest = parseFloat(yInvestElement.value);
+        let CYP = (yInvest / totalCost) * 100;
+        YP.innerText = `Total invested percentage of Y : ${CYP % 1 === 0 ? CYP : CYP.toFixed(2)}%`;
+        YF.innerText = `Formula of Y : ${totalProfit} x ${(CYP / 100).toFixed(1)} x 0.3`;
+
+        let CYS = totalProfit * (CYP / 100) * 0.3;
+        YS.innerText = `Profit share of Y : ${CYS % 1 === 0 ? CYS : CYS.toFixed(2)} MMK`;
+
+        let CYR = (CYS / yInvest) * 100;
+        YR.innerText = `Y Profit Rate : ${CYR % 1 === 0 ? CYR : CYR.toFixed(2)}%`;
+      }
+    };
+  </script>
+
+</body>
+</html>
