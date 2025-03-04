@@ -10,58 +10,33 @@
   <!-- Left Column -->
   <div class="column">
     <p>Total Cost</p>
-    <input type="number" id="totalCostLeft"> <span>MMK</span>
+    <input type="number" id="totalCost"> <span>MMK</span>
     <p>Total Profit</p>
-    <input type="number" id="totalProfitLeft"> <span>MMK</span>
-    <p id="PRLeft">Profit Rate : </p>
+    <input type="number" id="totalProfit"> <span>MMK</span>
+    <p id="PR">Profit Rate : </p>
     <br><br>
     <p>X Invest</p>
-    <input type="number" id="xInvestLeft"> <span>MMK</span>
+    <input type="number" id="xInvest"> <span>MMK</span>
     <br><br>
-    <button id="calLeft" onclick="click_for_X('Left')">Calculate</button>
+    <button id="cal" onclick="click_for_X()">Calculate</button>
 
-    <p id="XPLeft"> Total invested percentage of X : </p>
-    <p id="XSLeft"> Profit share of X : </p>
-    <p id="XRLeft"> X Profit Rate : </p>
-    <p id="XFLeft"> Formula of X : (Total Profit) x (Total invested percentage of X) x 30% </p>
-    <br>
-  </div>
-
-  <!-- Right Column -->
-  <div class="column">
-    <p>Total Cost</p>
-    <input type="number" id="totalCostRight"> <span>MMK</span>
-    <p>Total Profit</p>
-    <input type="number" id="totalProfitRight"> <span>MMK</span>
-    <p id="PRRight">Profit Rate : </p>
-    <br><br>
-    <p>Y Invest</p>
-    <input type="number" id="yInvestRight"> <span>MMK</span>
-    <br><br>
-    <button id="calRight" onclick="click_for_X('Right')">Calculate</button>
-
-    <p id="YPRight"> Total invested percentage of Y : </p>
-    <p id="YSRight"> Profit share of Y : </p>
-    <p id="YRRight"> Y Profit Rate : </p>
-    <p id="YFRight"> Formula of Y : (Total Profit) x (Total invested percentage of Y) x 30% </p>
+    <p id="XP"> Total invested percentage of X : </p>
+    <p id="XS"> Profit share of X : </p>
+    <p id="XR"> X Profit Rate : </p>
+    <p id="XF"> Formula of X : (Total Profit) x (Total invested percentage of X) x 30% </p>
     <br>
   </div>
 
   <script>
-    const click_for_X = (side) => {
-      let totalCost = parseFloat(document.getElementById(`totalCost${side}`).value);
-      let totalProfit = parseFloat(document.getElementById(`totalProfit${side}`).value);
-      let PR = document.getElementById(`PR${side}`);
-      let xInvestElement = document.getElementById(`xInvest${side}`);
-      let yInvestElement = document.getElementById(`yInvest${side}`);
-      let XP = document.getElementById(`XP${side}`);
-      let XS = document.getElementById(`XS${side}`);
-      let XR = document.getElementById(`XR${side}`);
-      let XF = document.getElementById(`XF${side}`);
-      let YP = document.getElementById(`YP${side}`);
-      let YS = document.getElementById(`YS${side}`);
-      let YR = document.getElementById(`YR${side}`);
-      let YF = document.getElementById(`YF${side}`);
+    const click_for_X = () => {
+      let totalCost = parseFloat(document.getElementById(`totalCost`).value);
+      let totalProfit = parseFloat(document.getElementById(`totalProfit`).value);
+      let PR = document.getElementById(`PR`);
+      let xInvestElement = document.getElementById(`xInvest`);
+      let XP = document.getElementById(`XP`);
+      let XS = document.getElementById(`XS`);
+      let XR = document.getElementById(`XR`);
+      let XF = document.getElementById(`XF`);
 
       // Profit Rate Calculation
       let CPR = (totalProfit / totalCost) * 100;
@@ -79,20 +54,6 @@
 
         let CXR = (CXS / xInvest) * 100;
         XR.innerText = `X Profit Rate : ${CXR % 1 === 0 ? CXR : CXR.toFixed(2)}%`;
-      }
-
-      // Handle Y Investments
-      if (yInvestElement) {
-        let yInvest = parseFloat(yInvestElement.value);
-        let CYP = (yInvest / totalCost) * 100;
-        YP.innerText = `Total invested percentage of Y : ${CYP % 1 === 0 ? CYP : CYP.toFixed(2)}%`;
-        YF.innerText = `Formula of Y : ${totalProfit} x ${(CYP / 100).toFixed(1)} x 0.3`;
-
-        let CYS = totalProfit * (CYP / 100) * 0.3;
-        YS.innerText = `Profit share of Y : ${CYS % 1 === 0 ? CYS : CYS.toFixed(2)} MMK`;
-
-        let CYR = (CYS / yInvest) * 100;
-        YR.innerText = `Y Profit Rate : ${CYR % 1 === 0 ? CYR : CYR.toFixed(2)}%`;
       }
     };
   </script>
