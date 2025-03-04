@@ -3,33 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>App</title>
+  <title>Invest Calculator</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <link rel="stylesheet" href="app.css">
 </head>
 <body>
-  <!-- Left Column -->
-  <div class="column">
-    <p>Total Cost</p>
-    <input type="number" id="totalCost"> <span>MMK</span>
-    <p>Total Profit</p>
-    <input type="number" id="totalProfit"> <span>MMK</span>
+  <div class="column" id="capture-area">
+    <div style="display: flex; align-items: center;">
+      <p>Total Cost :</p>
+      <input type="number" id="totalCost" class="totalCost" oninput="adjustWidth(this)"> <span>MMK</span>
+    </div>
+    
+    <div style="display: flex; align-items: center;">
+      <p>Total Profit :</p>
+      <input type="number" id="totalProfit" class="totalProfit" oninput="adjustWidth(this)"> <span>MMK</span>
+    </div>  
+    
     <p id="PR">Profit Rate : </p>
     <br><br>
-    <p>X Total Invest</p>
-    <input type="number" id="xInvest"> <span>MMK</span>
+    <div style="display: flex; align-items: center;">
+      <p>X Total Invest :</p>
+      <input type="number" id="xInvest" class="xInvest" oninput="adjustWidth(this)"> <span>MMK</span>
+    </div>  
     <br><br>
     <button id="cal" onclick="click_for_X()">Calculate</button>
     <br>
     <p id="ExceedInvest">X Exceeded Invest :</p>
     <p id="InvestUsage" class="InvestUsage">Actual Usage of X Invest :</p>
     <br><br>
-<!-- <br> -->
     <p id="XP"> Invested percentage of X : </p>
     <p id="XS" class="XS"> Profit share of X : </p>
     <p id="XR"> X Profit Rate : </p>
     <p id="XF"> Formula of X : (Total Profit) x (Total invested percentage of X) x 30% </p>
     <br>
   </div>
+  <button id="screenshot-btn" class="screenshot-btn">Capture Screenshot</button>
 
   <script>
     const click_for_X = () => {
@@ -76,6 +84,27 @@
         XR.innerText = `X Profit Rate : ${CXR % 1 === 0 ? CXR : CXR.toFixed(2)}%`;
       }
     };
+
+    function adjustWidth(input) {
+        // Set the width of the input to match its value length
+        input.style.color = "#067eff";
+        input.style.width = (input.value.length + 2) + "ch";  // 1ch is roughly the width of one character
+    }
+
+    document.getElementById("screenshot-btn").addEventListener("click", function() {
+        const element = document.getElementById("capture-area");
+
+        html2canvas(element, {
+            scale: 2, // Higher quality capture
+            useCORS: true // Capture cross-origin images
+        }).then(canvas => {
+            let image = canvas.toDataURL("image/png");
+            let link = document.createElement("a");
+            link.href = image;
+            link.download = "screenshot.png";
+            link.click();
+        });
+    });
   </script>
 
 </body>
