@@ -15,18 +15,17 @@
     <input type="number" id="totalProfit"> <span>MMK</span>
     <p id="PR">Profit Rate : </p>
     <br><br>
-    <p>X Invest</p>
+    <p>X Total Invest</p>
     <input type="number" id="xInvest"> <span>MMK</span>
     <br><br>
     <button id="cal" onclick="click_for_X()">Calculate</button>
     <br>
-    <p>X Exceeded Invest</p>
-    <input type="text" id="ExceedInvest"> <span>MMK</span>
-    <p>Actual Usage of X Invest</p>
-    <input type="text" id="InvestUsage"> <span>MMK</span>
+    <p id="ExceedInvest">X Exceeded Invest :</p>
+    <p id="InvestUsage" class="InvestUsage">Actual Usage of X Invest :</p>
+    <br><br>
 
-    <p id="XP"> Total invested percentage of X : </p>
-    <p id="XS"> Profit share of X : </p>
+    <p id="XP"> Invested percentage of X : </p>
+    <p id="XS" class="XS"> Profit share of X : </p>
     <p id="XR"> X Profit Rate : </p>
     <p id="XF"> Formula of X : (Total Profit) x (Total invested percentage of X) x 30% </p>
     <br>
@@ -42,6 +41,12 @@
       let XS = document.getElementById(`XS`);
       let XR = document.getElementById(`XR`);
       let XF = document.getElementById(`XF`);
+      let ExceedInvest = document.getElementById(`ExceedInvest`);
+      let InvestUsage = document.getElementById(`InvestUsage`);
+      let xInvest = 0;
+      let CXP = 0;
+      let CXS = 0;
+      let CXR = 0;
 
       // Profit Rate Calculation
       let CPR = (totalProfit / totalCost) * 100;
@@ -49,15 +54,25 @@
 
       // Handle X Investments
       if (xInvestElement) {
-        let xInvest = parseFloat(xInvestElement.value);
-        let CXP = (xInvest / totalCost) * 100;
-        XP.innerText = `Total invested percentage of X : ${CXP % 1 === 0 ? CXP : CXP.toFixed(2)}%`;
-        XF.innerText = `Formula of X : ${totalProfit} x ${(CXP / 100).toFixed(1)} x 0.3`;
+        let xInvestELV = xInvestElement.value;
+        if (xInvestELV <= totalCost) {
+          xInvest = xInvestELV;
+          ExceedInvest.innerText = `X Exceeded Invest : 0 MMK`;
+          InvestUsage.innerText = `Actual Usage of X Invest : ${xInvestELV} MMK`;
+        }
+        if (xInvestELV > totalCost) {
+          xInvest = totalCost;
+          ExceedInvest.innerText = `X Exceeded Invest : ${xInvestELV - totalCost} MMK`;
+          InvestUsage.innerText = `Actual Usage of X Invest : ${totalCost} MMK`;
+        }
+        CXP = (xInvest / totalCost) * 100;
+        XP.innerText = `Invested percentage of X : ${CXP % 1 === 0 ? CXP : CXP}%`;
+        XF.innerText = `Formula of X : ${totalProfit} x ${(CXP / 100)} x 0.3`;
 
-        let CXS = totalProfit * (CXP / 100) * 0.3;
+        CXS = totalProfit * (CXP / 100) * 0.3;
         XS.innerText = `Profit share of X : ${CXS % 1 === 0 ? CXS : CXS.toFixed(2)} MMK`;
 
-        let CXR = (CXS / xInvest) * 100;
+        CXR = (CXS / xInvest) * 100;
         XR.innerText = `X Profit Rate : ${CXR % 1 === 0 ? CXR : CXR.toFixed(2)}%`;
       }
     };
